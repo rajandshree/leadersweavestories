@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LWS — Personal Leadership Narrative (Connectable + Mobile)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --brand:#1F4C9D; }
+  body{ font-family:Inter, sans-serif; background:#FDFBF7; color:#1f2937; }
+  .form-section{ display:none; } .form-section.active{ display:block; }
+  .pill{ display:inline-block; padding:2px 10px; border-radius:999px; background:#eff6ff; color:#1d4ed8; font-size:12px; border:1px solid #bfdbfe;}
+  @media print{ #controls, .no-print { display:none !important; } }
+</style>
+</head>
+<body class="p-4 sm:p-8">
+<header class="max-w-5xl mx-auto flex items-center justify-between mb-6">
+  <div>
+    <h1 class="text-2xl sm:text-3xl font-semibold">Leaders Weave Stories — Personal Leadership Narrative</h1>
+    <p class="text-gray-600 text-sm">Connect this page to your reduced-question Google Form, then share.</p>
+  </div>
+  <div class="flex gap-2 items-center no-print">
+    <button id="connect-btn" class="px-3 py-2 border rounded">Connect to Google Form</button>
+    <button id="print-btn" class="px-3 py-2 border rounded">Print / PDF</button>
+  </div>
+</header>
+
+<div id="wizard" class="max-w-5xl mx-auto bg-white rounded-2xl shadow p-6 sm:p-8">
+  <div id="wizard-progress" class="mb-4 text-sm text-gray-600">Step 1 of 6</div>
+
+  <form id="form" class="space-y-8">
+    <!-- S0 Student meta -->
+    <section id="s0" class="form-section active">
+      <h2 class="text-xl font-semibold mb-2">Student Info</h2>
+      <p class="text-sm text-slate-600">Enter your name, email, and mobile number (include country code if outside India).</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label class="block text-sm font-medium">Name</label>
+          <input name="student-name" type="text" class="mt-1 w-full border rounded p-2" placeholder="Your full name" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium">Email</label>
+          <input name="student-email" type="email" class="mt-1 w-full border rounded p-2" placeholder="you@school.edu" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium">Mobile Number</label>
+          <input name="student-mobile" type="tel" class="mt-1 w-full border rounded p-2" placeholder="e.g., +91 98765 43210" pattern="^\+?[0-9 ()\-]{7,18}$" title="Digits, spaces, parentheses, dashes; optionally starts with +">
+        </div>
+      </div>
+    </section>
+
+    <!-- S1 Experiences -->
+    <section id="s1" class="form-section">
+      <h2 class="text-xl font-semibold mb-2">Part I: The Building Blocks</h2>
+      <p class="text-sm text-slate-600">History is replete with examples of leaders who influence their teams through their personal narrative, showcasing their values and beliefs. We wish to create one such narrative in this exercise.
+
+Think about professional and personal moments where you served under a good leader, and experience that may have shaped your perspective on leadership. Describe the situation and its outcome.</p>
+      <textarea name="experience-1" rows="3" class="w-full border p-3 rounded mb-2" placeholder="Experience (Describe the situation and  the outcome)"></textarea>
+    </section>
+
+    <!-- S2 Connecting the Dots -->
+    <section id="s2" class="form-section">
+      <h2 class="text-xl font-semibold mb-2">Part II: Identifying Leadership Philosophy</h2>
+      <p class="text-sm text-slate-600">Now, let's reflect on what you learned from the experience to define your understanding of a leader.</p>
+      <textarea id="lessons-learned" name="lessons-learned" rows="3" class="w-full border p-3 rounded mb-2" placeholder="Key Lessons Learned  (What were the most significant lessons you learned about leadership?)"></textarea>
+      <textarea id="core-values" name="core-values" rows="3" class="w-full border p-3 rounded mb-2" placeholder="Based on the understanding, define your interpretation of a Leader.
+
+Complete the sentence: 'I believe a great leader is someone who......'
+
+"></textarea>
+    </section>
+
+    <!-- S3 Signature Story -->
+    <section id="s3" class="form-section">
+      <h2 class="text-xl font-semibold mb-2">Part III: Your Signature Story</h2>
+      <p class="text-sm text-slate-600">As a leader, you will also have to influence your team through your narrative. As we have also learnt, every good narrative needs a powerful story.  I request you to bring out  one compelling example of your leadership in action. It may be from your personal or your professional timeline, from your present or past.</p>
+      <textarea id="story-situation" name="story-situation" rows="3" class="w-full border p-3 rounded mb-2" placeholder="The Situation (Set the context. What was the challenge?)"></textarea>
+      <textarea id="story-action" name="story-action" rows="3" class="w-full border p-3 rounded mb-2" placeholder="The Action (What did you do? Be specific and write the facts and not just an outline) "></textarea>
+      <textarea id="story-result" name="story-result" rows="3" class="w-full border p-3 rounded mb-2" placeholder="The Outcome (What was the outcome, and what did it demonstrate about your leadership?)"></textarea>
+      <textarea id="story-so-what" name="story-so-what" rows="3" class="w-full border p-3 rounded mb-2" placeholder="The Impact (Why does this narrative matter? What does it say about your core leadership values?)"></textarea>
+      <textarea id="leader-statement" name="leader-statement" rows="3" class="w-full border p-3 rounded" placeholder="Now based on the above parameters, complete the statement
+I am a leader who…......."></textarea>
+    </section>
+
+    <!-- S4a Attributes Guide -->
+    
+<section id="s5" class="form-section">
+  <h2 class="text-xl font-semibold mb-2">Your Leadership Attribute Profile — Guide & Ratings</h2>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3"><div class="border rounded-lg p-4 bg-white"><div class="border rounded-lg p-4 bg-blue-50"><h3 class="font-semibold mb-1">Empathy</h3><p class="text-sm">1 You dismiss feelings; interrupt;  ignore people impact. <br>5 You listen deeply; validate perspectives; </p></div>
+    <div class="mt-3">
+      <input id="attr-empathy" name="attr-empathy" type="range" min="1" max="5" value="3" class="w-full">
+    </div>
+    </div>
+<div class="border rounded-lg p-4 bg-white"><div class="border rounded-lg p-4 bg-blue-50"><h3 class="font-semibold mb-1">Decisiveness</h3><p class="text-sm">1 You avoid/defer; analysis paralysis; miss windows. <br>5 You make timely calls with limited data; set owners/milestones; adjust fast when evidence shifts.</p></div>
+    <div class="mt-3">
+      <input id="attr-decisiveness" name="attr-decisiveness" type="range" min="1" max="5" value="3" class="w-full">
+    </div>
+    </div>
+<div class="border rounded-lg p-4 bg-white"><div class="border rounded-lg p-4 bg-blue-50"><h3 class="font-semibold mb-1">Communication</h3><p class="text-sm">1 You are unclear/inconsistent; hoard info; weak two-way.<br>5 You are clear, concise, tailored; check understanding; close loops promptly</p></div>
+    <div class="mt-3">
+      <input id="attr-communication" name="attr-communication" type="range" min="1" max="5" value="3" class="w-full">
+    </div>
+    </div>
+<div class="border rounded-lg p-4 bg-white"><div class="border rounded-lg p-4 bg-blue-50"><h3 class="font-semibold mb-1">Vision</h3><p class="text-sm">1 You are task-only; no link to goals. <br>5 You are future-focused; translate strategy to daily work; spark alignment/innovation</p></div>
+    <div class="mt-3">
+      <input id="attr-vision" name="attr-vision" type="range" min="1" max="5" value="3" class="w-full">
+    </div>
+    </div>
+<div class="border rounded-lg p-4 bg-white"><div class="border rounded-lg p-4 bg-blue-50"><h3 class="font-semibold mb-1">Integrity</h3><p class="text-sm">1 You obscures facts; blame; misaligned words/actions. <br>5 You are transparent; keep commitments; own mistakes; choose ethics over convenience</p></div>
+    <div class="mt-3">
+      <input id="attr-integrity" name="attr-integrity" type="range" min="1" max="5" value="3" class="w-full">
+    </div>
+    </div>
+<div class="border rounded-lg p-4 bg-white"><div class="border rounded-lg p-4 bg-blue-50"><h3 class="font-semibold mb-1">Resilience</h3><p class="text-sm">1 You are pessimistic; give up; spread anxiety. <br>5 You stay composed; learn; sustain performance; model grounded optimism.</p></div>
+    <div class="mt-3">
+      <input id="attr-resilience" name="attr-resilience" type="range" min="1" max="5" value="3" class="w-full">
+    </div>
+    </div></div>
+  <p class="text-sm text-slate-600 mt-4">Adjust your ratings here. Your radar chart will appear on the Summary page.</p>
+</section>
+
+    
+
+    <!-- S5 Summary (no sliders) -->
+    
+
+    <!-- Controls -->
+    <div id="controls" class="mt-6 flex justify-between">
+      <button id="prev" type="button" class="px-4 py-2 border rounded disabled:opacity-40" disabled>Previous</button>
+      <div class="flex gap-2">
+        <button id="next" type="button" class="px-4 py-2 rounded text-white" style="background:var(--brand)">Next</button>
+        <button id="finish" type="button" class="px-4 py-2 rounded bg-green-600 text-white hidden">See Summary</button>
+      </div>
+    </div>
+  
+<section id="s5" class="form-section">
+  <h2 class="text-xl font-semibold text-center mb-5">Your Leadership Summary</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+    <div class="border rounded-lg p-4 bg-white">
+      <div class="text-xs uppercase tracking-wider text-slate-500 mb-2">Snapshot</div>
+      <div class="text-sm"><span class="text-slate-500">Name:</span> <span id="sum-name" class="font-medium"></span></div>
+      <div class="text-sm"><span class="text-slate-500">Email:</span> <span id="sum-email" class="font-medium"></span></div>
+      <div class="text-sm"><span class="text-slate-500">Mobile:</span> <span id="sum-mobile" class="font-medium"></span></div>
+    </div>
+    <div class="md:col-span-2 border rounded-lg p-4 bg-white">
+      <div class="text-xs uppercase tracking-wider text-slate-500 mb-2">I am a leader who…</div>
+      <div id="sum-leader-statement" class="text-lg leading-relaxed text-slate-900"></div>
+    </div>
+  </div>
+
+  <div class="border rounded-lg p-4 bg-white">
+    <div class="text-xs uppercase tracking-wider text-slate-500 mb-2">Radar Chart</div>
+    <div class="h-72"><canvas id="chart"></canvas></div>
+  </div>
+
+  
+      <div class="mt-6 p-4 bg-blue-50 rounded">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div>
+            <div class="font-semibold mb-1">Submit</div>
+            <p class="text-sm text-gray-600">Posts to your Google Form and opens the confirmation page.</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button id="copy-summary" type="button" class="px-4 py-2 rounded border">Copy Summary</button>
+            <button id="submit-google" type="button" class="px-4 py-2 rounded text-white" style="background:var(--brand)">Submit to Google Form</button>
+          </div>
+        </div>
+        <p id="status" class="text-xs text-gray-500 mt-2"></p>
+      </div>
+
+</section>
+
+</form>
+</div>
+
+<!-- Connect Modal -->
+<div id="modal" class="fixed inset-0 hidden items-center justify-center">
+  <div class="absolute inset-0 bg-black/40"></div>
+  <div class="relative bg-white max-w-3xl w-full rounded-xl shadow p-6">
+    <h2 class="text-xl font-semibold mb-2">Connect to Google Form</h2>
+    <ol class="list-decimal ml-6 text-sm text-gray-700 space-y-2 mb-4">
+      <li>Open your Form (⋮) → <b>Get pre-filled link</b>. Type tokens in the questions you kept (e.g., <code>NAME</code>, <code>EMAIL</code>, <code>MOBILE</code>, <code>LS</code>, <code>LV</code>, <code>SS</code>, <code>SA</code>, <code>SR</code>, <code>SW</code>, <code>AE</code>…)</li>
+      <li>Paste the prefilled link and your Form’s <code>formResponse</code> URL below.</li>
+    </ol>
+    <label class="block text-sm font-medium">Prefilled link</label>
+    <input id="prefilled" type="url" class="w-full border rounded p-2 mb-3" placeholder="https://docs.google.com/forms/d/e/.../viewform?usp=pp_url&entry...=NAME...">
+
+    <label class="block text-sm font-medium">Form action (formResponse URL)</label>
+    <input id="formAction" type="url" class="w-full border rounded p-2 mb-4" placeholder="https://docs.google.com/forms/d/e/FORM_ID/formResponse">
+
+    <div class="text-sm text-gray-600 mb-2">Detected mapping:</div>
+    <pre id="mapping" class="text-xs bg-gray-50 p-2 rounded max-h-40 overflow-auto"></pre>
+
+    <div class="mt-4 flex justify-end gap-2">
+      <button id="close-modal" class="px-3 py-2 border rounded">Cancel</button>
+      <button id="save-config" class="px-3 py-2 rounded text-white" style="background:var(--brand)">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== Wizard =====
+const sections=[...document.querySelectorAll('.form-section')]; let idx=0;
+function show(i){ sections.forEach((s,k)=> s.classList.toggle('active', k===i)); idx=i;
+  document.getElementById('prev').disabled = i===0;
+  document.getElementById('next').classList.toggle('hidden', i===sections.length-1);
+  document.getElementById('finish').classList.toggle('hidden', i!==sections.length-2);
+  document.getElementById('wizard-progress').textContent = `Step ${i+1} of ${sections.length}`;
+  if(i===sections.length-1){ populateSummary(); drawChart(); }
+}
+show(0);
+document.getElementById('next').onclick = ()=> show(idx+1);
+document.getElementById('prev').onclick = ()=> show(idx-1);
+document.getElementById('finish').onclick = ()=> show(sections.length-1);
+document.getElementById('print-btn').onclick = ()=> window.print();
+
+// ===== Populate Summary =====
+function nl2br(x){ return (x||'').replace(/\n/g,'<br>'); }
+function populateSummary(){
+  const get = (n)=> document.querySelector(`[name="${n}"]`)?.value || '';
+  document.getElementById('sum-name').textContent = get('student-name');
+  document.getElementById('sum-email').textContent = get('student-email');
+  document.getElementById('sum-mobile').textContent = get('student-mobile');
+  document.getElementById('sum-leader-statement').innerHTML = nl2br(get('leader-statement')) || '<span class="text-slate-400">Not provided</span>';
+}
+
+// ===== Radar Chart =====
+let chart;
+function drawChart(){
+  const ctx=document.getElementById('chart').getContext('2d');
+  if(chart) chart.destroy();
+  const vals=['attr-empathy','attr-decisiveness','attr-communication','attr-vision','attr-integrity','attr-resilience'].map(id=>+document.getElementById(id).value);
+  chart=new Chart(ctx,{type:'radar',data:{
+    labels:['Empathy','Decisiveness','Communication','Vision','Integrity','Resilience'],
+    datasets:[{data:vals,label:'Self-Assessment',backgroundColor:'rgba(31,76,157,.2)',borderColor:'rgba(31,76,157,1)',borderWidth:2}]
+  },options:{scales:{r:{min:0,max:5,ticks:{stepSize:1}}},plugins:{legend:{display:false}},maintainAspectRatio:false}});
+}
+['attr-empathy','attr-decisiveness','attr-communication','attr-vision','attr-integrity','attr-resilience'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',()=>{ if(idx===sections.length-1) drawChart(); });
+});
+
+// ===== Connect to Google Form =====
+const STORAGE_KEY='lws_form_config_reduced_v2_mobile';
+const fieldCodes={
+  "student-name":"NAME","student-email":"EMAIL","student-mobile":"MOBILE",
+  "experience-1":"E1","experience-2":"E2",
+  "lessons-learned":"LL","core-values":"CV","leader-definition":"LD",
+  "leader-statement":"LS","leader-vision":"LV",
+  "story-situation":"SS","story-action":"SA","story-result":"SR","story-so-what":"SW",
+  "attr-empathy":"AE","attr-decisiveness":"AD","attr-communication":"AC","attr-vision":"AV","attr-integrity":"AI","attr-resilience":"AR"
+};
+let formConfig = { formAction: "https://docs.google.com/forms/d/e/1FAIpQLSeU_gNQnmajItr1EHEgcxjLkzRDr8711M6Pvf2d5UP2Wd3QLQ/formResponse", map: {"student-name": "entry.1045198425", "student-email": "entry.1301778648", "student-mobile": "entry.722716088", "experience-1": "entry.884348106", "lessons-learned": "entry.1654717553", "core-values": "entry.1137312544", "leader-statement": "entry.1236685578", "story-situation": "entry.1986752022", "story-action": "entry.927241782", "story-result": "entry.562305060", "story-so-what": "entry.832435565", "attr-empathy": "entry.857133554", "attr-decisiveness": "entry.432038981", "attr-communication": "entry.1021788076", "attr-vision": "entry.727195810", "attr-integrity": "entry.1488980770", "attr-resilience": "entry.47055595"} }; localStorage.setItem(STORAGE_KEY, JSON.stringify(formConfig));
+
+function openModal(){ document.getElementById('modal').classList.remove('hidden'); document.getElementById('modal').classList.add('flex'); }
+function closeModal(){ document.getElementById('modal').classList.add('hidden'); document.getElementById('modal').classList.remove('flex'); }
+document.getElementById('connect-btn').onclick=openModal;
+document.getElementById('close-modal').onclick=closeModal;
+
+const prefilledInput=document.getElementById('prefilled');
+const formActionInput=document.getElementById('formAction');
+const mappingPre=document.getElementById('mapping');
+function renderMapping(){ mappingPre.textContent = JSON.stringify(formConfig, null, 2); }
+renderMapping();
+
+prefilledInput.addEventListener('input', ()=>{
+  try{
+    const url = new URL(prefilledInput.value);
+    const params = url.searchParams;
+    const map = {};
+    for(const [k,v] of params.entries()){
+      if(!k.startsWith('entry.')) continue;
+      const code = (v||'').trim().toUpperCase();
+      const field = Object.keys(fieldCodes).find(f => fieldCodes[f]===code);
+      if(field) map[field] = k;
+    }
+    formConfig.map = { ...formConfig.map, ...map };
+    renderMapping();
+  }catch(e){ mappingPre.textContent='Invalid prefilled link'; }
+});
+
+document.getElementById('save-config').addEventListener('click', ()=>{
+  formConfig.formAction = formActionInput.value.trim() || formConfig.formAction;
+  if(!formConfig.formAction || !/^https:\/\/docs\.google\.com\/forms\/d\/e\/.+\/formResponse$/.test(formConfig.formAction)){
+    alert('Please paste a valid formResponse URL.');
+    return;
+  }
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(formConfig));
+  closeModal();
+  document.getElementById('status').textContent='Connected to Google Form.';
+});
+
+// Prewire via ?prefilled=&action=
+(function initFromQuery(){
+  const qs = new URLSearchParams(location.search);
+  const pre = qs.get('prefilled'); const act = qs.get('action');
+  let changed=false;
+  if(pre){
+    try{
+      const url=new URL(pre); const params=url.searchParams; const map={};
+      for(const [k,v] of params.entries()){
+        if(!k.startsWith('entry.')) continue;
+        const code=(v||'').trim().toUpperCase();
+        const field=Object.keys(fieldCodes).find(f=>fieldCodes[f]===code);
+        if(field) map[field]=k;
+      }
+      if(Object.keys(map).length){ formConfig.map={...formConfig.map, ...map}; changed=true; }
+    }catch(e){ /* ignore */ }
+  }
+  if(act && /^https:\/\/docs\.google\.com\/forms\/d\/e\/.+\/formResponse$/.test(act)){ formConfig.formAction=act; changed=true; }
+  if(changed){ localStorage.setItem(STORAGE_KEY, JSON.stringify(formConfig)); renderMapping(); }
+})();
+
+// Submit
+document.getElementById('submit-google').addEventListener('click', ()=>{
+  if(!formConfig.formAction || !formConfig.map || Object.keys(formConfig.map).length < 4){
+    alert('Google Form is not connected. Click "Connect to Google Form" or open with ?prefilled=...&action=...');
+    return;
+  }
+  const fdata = {};
+  new FormData(document.getElementById('form')).forEach((v,k)=> fdata[k]=v);
+  ['attr-empathy','attr-decisiveness','attr-communication','attr-vision','attr-integrity','attr-resilience'].forEach(id=> fdata[id] = document.getElementById(id).value);
+
+  const post = document.createElement('form');
+  post.method = 'POST'; post.action = formConfig.formAction; post.target = '_blank';
+  Object.entries(formConfig.map).forEach(([field, entryId])=> {
+    const input = document.createElement('input');
+    input.type = 'hidden'; input.name = entryId; input.value = fdata[field] || '';
+    post.appendChild(input);
+  });
+  document.body.appendChild(post); post.submit(); document.body.removeChild(post);
+  document.getElementById('status').textContent = 'Submitted to Google Form (see the confirmation tab).';
+});
+
+// Copy Summary (plain text)
+document.getElementById('copy-summary').addEventListener('click', ()=>{
+  const txt = [
+    `Name: ${document.getElementById('sum-name').textContent}`,
+    `Email: ${document.getElementById('sum-email').textContent}`,
+    `Mobile: ${document.getElementById('sum-mobile').textContent}`,
+    `I am a leader who… ${document.getElementById('sum-leader-statement').textContent}`,
+    `Vision: ${document.getElementById('sum-vision').textContent}`,
+    `Core Values: ${document.getElementById('sum-values').textContent}`,
+    'Signature Story:',
+    `  Situation: ${document.getElementById('sum-ss').textContent}`,
+    `  Action: ${document.getElementById('sum-sa').textContent}`,
+    `  Result: ${document.getElementById('sum-sr').textContent}`,
+    `  So What?: ${document.getElementById('sum-sw').textContent}`
+  ].join('\n');
+  navigator.clipboard.writeText(txt);
+  document.getElementById('status').textContent='Summary copied to clipboard.';
+});
+</script>
+</body>
+</html>
